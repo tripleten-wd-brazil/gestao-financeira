@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main>
+      <section>
+        <h1>Formulário</h1>
+        <form id="form">
+          <label for="data">
+            <span>Data</span>
+            <input type="date" id="data" name="data" />
+          </label>
+          <label for="descricao">
+            <span>Descrição</span>
+            <input type="text" id="descricao" name="descricao" />
+          </label>
+          <label for="valor">
+            <span>Valor</span>
+            <input type="number" id="valor" name="valor" step="0.01" />
+          </label>
+          <button id="submit" type="submit">Salvar</button>
+        </form>
+      </section>
+      <section>
+        <h1>Lançamentos</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Descrição</th>
+              <th>Valor (R$)</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </section>
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>
