@@ -1,0 +1,21 @@
+table {
+  border-collapse: collapse;
+}
+
+td {
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  padding: 0.5em;
+}
+
+tr:nth-child(even) {
+  background-color: aquamarine;
+}
+
+.btn-delete {
+  background-color: crimson;
+  border: none;
+  padding: 0.75em 1em;
+  color: white;
+  border-radius: 20px;
+}
