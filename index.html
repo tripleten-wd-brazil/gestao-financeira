@@ -11,20 +11,21 @@
     <main>
       <section>
         <h1>Formulário</h1>
-        <form id="form">
+        <form id="form" name="lancamentos">
           <label for="data">
             <span>Data</span>
-            <input type="date" id="data" name="data" />
+            <input type="date" id="data" name="data" required />
           </label>
           <label for="descricao">
             <span>Descrição</span>
-            <input type="text" id="descricao" name="descricao" />
+            <input type="text" id="descricao" name="descricao" required />
           </label>
           <label for="valor">
             <span>Valor</span>
-            <input type="number" id="valor" name="valor" step="0.01" />
+            <input type="number" id="valor" name="valor" step="0.01" required />
           </label>
           <button id="submit" type="submit">Salvar</button>
+          <button type="reset">Cancelar</button>
         </form>
       </section>
       <section>
@@ -38,15 +39,23 @@
             </tr>
           </thead>
           <tbody id="tbody"></tbody>
-          <tfooter>
+          <tfoot>
             <tr>
               <td colspan="2">Total</td>
               <td id="total">0</td>
             </tr>
-          </tfooter>
+          </tfoot>
         </table>
+        <template id="template-row">
+          <tr>
+            <td class="data"></td>
+            <td class="descricao"></td>
+            <td class="valor"></td>
+            <td><button class="btn-delete">Deletar</button></td>
+          </tr>
+        </template>
       </section>
-      <button onclick="testando()">Teste</button>
+      <div class="alert-container"></div>
     </main>
     <script src="index.js"></script>
   </body>
