@@ -49,27 +49,5 @@
       <button onclick="testando()">Teste</button>
     </main>
     <script src="index.js"></script>
-    <script>
-      const pedidos = [
-        { cliente: { id: 1, name: "Thiago" }, produtos: [] },
-        { cliente: { id: 2, name: "Renan" }, produtos: [] },
-        { cliente: { id: 3, name: "Mônica" }, produtos: [] },
-        { cliente: { id: 4, name: "João Fernando" }, produtos: [] },
-      ];
-
-      function testando() {
-        const pedidoComClienteIdPar = pedidos
-          .filter(function (pedido) {
-            const ehPar = pedido.cliente.id % 2 === 0;
-            return ehPar;
-          })
-          .map(function (pedido) {
-            return pedido.cliente.name;
-          });
-
-        console.log(pedidos);
-        console.log(pedidoComClienteIdPar);
-      }
-    </script>
   </body>
 </html>

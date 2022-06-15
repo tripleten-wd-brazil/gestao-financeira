@@ -1,15 +1,10 @@
 const botao = document.querySelector("#submit");
 let minhaVar;
 
-const salvar = function (e) {
+function salvar(e) {
   e.preventDefault();
-  const dataInput = document.querySelector("#data");
-  const descricaoInput = document.querySelector("#descricao");
-  const valorInput = document.querySelector("#valor");
-
-  const data = dataInput.value;
-  const descricao = descricaoInput.value;
-  const valor = valorInput.value;
+  // destructuring
+  const { data, descricao, valor, dataInput } = pegaValoresForm();
 
   const tbody = document.querySelector("#tbody");
   tbody.innerHTML += `<tr>
@@ -24,22 +19,41 @@ const salvar = function (e) {
   // valorInput.value = "";
 
   const buttonsDelete = document.querySelectorAll(".btn-delete");
-  const buttons = Array.from(buttonsDelete);
-  // forEach
-  // map
-  // filter
+  buttonsDelete.forEach(adicionaEventoDeletar);
 
+  atualizaTotal();
+
+  // dataInput.focus();
+}
+
+function pegaValoresForm() {
+  const dataInput = document.querySelector("#data");
+  const descricaoInput = document.querySelector("#descricao");
+  const valorInput = document.querySelector("#valor");
+
+  const data = dataInput.value;
+  const descricao = descricaoInput.value;
+  const valor = valorInput.value;
+
+  return { data, descricao, valor, dataInput };
+}
+
+function atualizaTotal() {
   const tdsValor = document.querySelectorAll(".valor");
-  let total = 0;
-  for (let i = 0; i < tdsValor.length; i++) {
-    const valorAtual = tdsValor[i].textContent;
-    total += parseFloat(valorAtual);
-  }
+  const total = Array.from(tdsValor).reduce(
+    (acc, tdValor) => (acc += parseFloat(tdValor.textContent)),
+    0
+  );
 
   const totalTd = document.querySelector("#total");
   totalTd.textContent = total;
+}
 
-  dataInput.focus();
+const adicionaEventoDeletar = (button) => {
+  button.addEventListener("click", (event) => {
+    event.target.parentNode.parentNode.remove();
+    atualizaTotal();
+  });
 };
 
 botao.addEventListener("click", salvar);
