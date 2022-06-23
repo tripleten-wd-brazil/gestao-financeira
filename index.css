@@ -45,3 +45,13 @@ tr:nth-child(even) {
   background-color: crimson;
   color: white;
 }
+
+#form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__error {
+  color: crimson;
+  margin: 0.5em 0;
+}

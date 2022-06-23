@@ -11,21 +11,26 @@
     <main>
       <section>
         <h1>Formulário</h1>
-        <form id="form" name="lancamentos">
+        <form id="form" name="lancamentos" novalidate>
           <label for="data">
             <span>Data</span>
             <input type="date" id="data" name="data" required />
+            <div class="form__error form__error_data"></div>
           </label>
           <label for="descricao">
             <span>Descrição</span>
             <input type="text" id="descricao" name="descricao" required />
+            <div class="form__error form__error_descricao"></div>
           </label>
           <label for="valor">
             <span>Valor</span>
             <input type="number" id="valor" name="valor" step="0.01" required />
+            <div class="form__error form__error_valor"></div>
           </label>
-          <button id="submit" type="submit">Salvar</button>
-          <button type="reset">Cancelar</button>
+          <div>
+            <button id="submit" type="submit">Salvar</button>
+            <button type="reset">Cancelar</button>
+          </div>
         </form>
       </section>
       <section>
