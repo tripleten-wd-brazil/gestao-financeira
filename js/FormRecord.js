@@ -1,14 +1,17 @@
 import Record from "./Record.js";
+import Alert from "./Alert.js";
 
 export default class FormRecord {
-  constructor() {
+  constructor(recordList) {
+    this._recordList = recordList;
     this._form = document.forms.lancamentos;
     this._dateInput = document.querySelector("#data");
     this._descriptionInput = document.querySelector("#descricao");
     this._valueInput = document.querySelector("#valor");
+    this._addListener();
   }
 
-  isValid() {
+  _isValid() {
     const isValidData = this._validateInput("data");
     const isValidDescricao = this._validateInput(
       "descricao",
@@ -27,7 +30,7 @@ export default class FormRecord {
     return isValid;
   }
 
-  getRecord() {
+  _getRecord() {
     return new Record({
       date: this._dateInput.value,
       description: this._descriptionInput.value,
@@ -35,8 +38,22 @@ export default class FormRecord {
     });
   }
 
-  reset() {
+  _reset() {
     this._form.reset();
     this._dateInput.focus();
+  }
+
+  _save(event) {
+    event.preventDefault();
+    if (!this._isValid()) return;
+
+    const record = this._getRecord();
+    this._recordList.add(record);
+    this._reset();
+    Alert.show("Seu registro foi inserido com sucesso");
+  }
+
+  _addListener() {
+    this._form.addEventListener("submit", (event) => this._save(event));
   }
 }
