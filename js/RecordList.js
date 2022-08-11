@@ -2,14 +2,17 @@ import Record from "./Record.js";
 import Alert from "./Alert.js";
 
 export default class RecordList {
-  constructor() {
+  constructor(api) {
     this._tbody = document.querySelector("#tbody");
     this._addListener();
+    this._api = api;
   }
 
   add(record) {
-    this._addRow(record);
-    this._addToLocalStorage(record);
+    this._persist(record).then((persistedRecord) => {
+      record.setId(persistedRecord._id);
+      this._addRow(record);
+    });
   }
 
   _addRow(record) {
@@ -18,17 +21,11 @@ export default class RecordList {
   }
 
   _getPersistedRecords() {
-    return JSON.parse(localStorage.getItem("records")) || [];
+    return this._api.getAll();
   }
 
-  _persist(records) {
-    localStorage.setItem("records", JSON.stringify(records));
-  }
-
-  _addToLocalStorage(record) {
-    const records = this._getPersistedRecords();
-    records.push(record);
-    this._persist(records);
+  _persist(record) {
+    return this._api.save(record);
   }
 
   _sumUp() {
@@ -42,30 +39,30 @@ export default class RecordList {
     totalTd.textContent = total.toFixed(2);
   }
 
-  loadData() {
-    const records = this._getPersistedRecords();
-    records.forEach((recordData) => {
-      const record = new Record(recordData);
-      this._addRow(record);
+  async loadData() {
+    this._getPersistedRecords().then((records) => {
+      records.forEach((recordData) => {
+        const record = new Record(recordData);
+        this._addRow(record);
+      });
+      this._sumUp();
     });
-    this._sumUp();
   }
 
   _getRecordIndex(evt) {
-    const elementOf = evt.target.closest("tr");
-    const arrayElements = Array.from(elementOf.parentElement.children);
-    return arrayElements.indexOf(elementOf);
+    const row = evt.target.closest("tr");
+    const idCell = row.querySelector(".id");
+    return idCell.textContent;
   }
 
   _delete(event) {
     if (event.target.classList.contains("btn-delete")) {
-      const index = this._getRecordIndex(event);
-      event.target.parentNode.parentNode.remove();
-      const records = this._getPersistedRecords();
-      records.splice(index, 1);
-      this._persist(records);
-      this._sumUp();
-      Alert.show("Seu registro foi removido com sucesso", "danger");
+      const id = this._getRecordIndex(event);
+      this._api.remove(id).then(() => {
+        event.target.parentNode.parentNode.remove();
+        this._sumUp();
+        Alert.show("Seu registro foi removido com sucesso", "danger");
+      });
     }
   }
 

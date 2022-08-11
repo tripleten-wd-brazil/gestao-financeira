@@ -55,3 +55,7 @@ tr:nth-child(even) {
   color: crimson;
   margin: 0.5em 0;
 }
+
+.id {
+  display: none;
+}
